@@ -19,7 +19,7 @@ object Main extends IOApp {
   override def run(args: List[String]): IO[ExitCode] = for {
     maybeInterval <-  (for {
       s <-  args.headOption.toOptionT[IO]
-      i <-  OptionT(s.toIntOption.toRight(new IllegalArgumentException("Argument should be an Int.")).liftTo[IO].map(_.some))
+      i <-  OptionT liftF IO.fromOption(s.toIntOption)(new IllegalArgumentException("Argument should be an Int."))
     } yield i.minutes).value
     interval      =   maybeInterval getOrElse 30.minutes
     rbt           <-  IO(new Robot)
