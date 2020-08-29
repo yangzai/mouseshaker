@@ -11,7 +11,7 @@ object Main extends IOApp {
   def schedule[F[_]: Timer](interval: FiniteDuration): Stream[F, Unit] = Stream.fixedDelay[F](interval)
 
   def shakeMouse[F[_]](rbt: Robot)(implicit F: Sync[F]): F[Unit] = for {
-    ptr     <-  F suspend Option(MouseInfo.getPointerInfo).toRight(new Error("No mouse.")).liftTo[F]
+    ptr     <-  F suspend F.fromOption(Option(MouseInfo.getPointerInfo), new Error("No mouse."))
     (x, y)  =   ptr.getLocation.pipe(p => (p.x, p.y))
     _       <-  Chain(x + 1, x - 1, x).traverse(F delay rbt.mouseMove(_, y))
   } yield ()
