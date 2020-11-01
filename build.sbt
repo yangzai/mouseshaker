@@ -10,7 +10,7 @@ addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1")
 addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full)
 
 libraryDependencies ++= Seq(
-  "co.fs2" %% "fs2-core" % "2.4.2"
+  "co.fs2" %% "fs2-core" % "2.4.4"
 )
 
 scalacOptions ++= Seq(
